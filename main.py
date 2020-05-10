@@ -9,15 +9,15 @@ import threading, random
 
 
 def translateGPSTimeToLocal(gpstimestamp):
-    print ("str" , gpstimestamp , parser.parse(gpstimestamp))
-    t = AstroTime(gpstimestamp, format="gps")
-    t = AstroTime(t, format="unix")
-    timestr = str(t)
+    print ("str" , gpstimestamp)
+    #t = AstroTime(gpstimestamp, format="gps")
+    #t = AstroTime(t, format="unix")
+    #timestr = str(t)
 
     from_zone = tz.tzutc()
     to_zone = tz.tzlocal()
 
-    utc = datetime.fromtimestamp(int(timestr))
+    utc = parser.parse(gpstimestamp)
     utc = utc.replace(tzinfo=from_zone)
 
     return utc.astimezone(to_zone)
