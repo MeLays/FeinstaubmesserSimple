@@ -24,5 +24,5 @@ class GpsdStreamReader(threading.Thread):
             # Lese den naechsten Datensatz von GPSD
             self.session.next()
             self.g_utc = self.session.utc
-            self.g_lat = self.fix.latitude
+            self.g_lat = self.session.fix.latitude
             self.g_lng = self.session.fix.longitude
