@@ -91,7 +91,7 @@ if __name__ == "__main__":
     sensorQuery.start()
 
     print("Waiting for GPS Signal to get current time...")
-    while gpsReader.g_utc == "" or gpsReader.g_utc is None:
+    while gpsReader.g_utc == "" or gpsReader.g_utc is None or gpsReader.g_lat == "nan":
         time.sleep(5)
         print("No GPS signal yet, checking again in 5 seconds ...")
         # TODO check if working
