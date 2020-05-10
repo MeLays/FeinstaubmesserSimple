@@ -9,7 +9,6 @@ import threading, random
 
 
 def translateGPSTimeToLocal(gpstimestamp):
-    print("type" , type(gpstimestamp))
     gpstimestamp = int(gpstimestamp)
     t = AstroTime(gpstimestamp, format="gps")
     t = AstroTime(t, format="unix")
