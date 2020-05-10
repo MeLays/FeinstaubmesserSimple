@@ -11,9 +11,9 @@ class GpsdStreamReader(threading.Thread):
         threading.Thread.__init__(self)
 
         self.session = gps(mode=WATCH_ENABLE)
-        self.g_utc = session.utc
-        self.g_lat = session.fix.latitude
-        self.g_lng = session.fix.longitude
+        self.g_utc = self.session.utc
+        self.g_lat = self.session.fix.latitude
+        self.g_lng = self.session.fix.longitude
 
         self.current_value = None
         # Der Thread wird ausgefuehrt
@@ -23,6 +23,6 @@ class GpsdStreamReader(threading.Thread):
         while self.running:
             # Lese den naechsten Datensatz von GPSD
             self.session.next()
-            self.g_utc = session.utc
-            self.g_lat = session.fix.latitude
-            self.g_lng = session.fix.longitude
+            self.g_utc = self.session.utc
+            self.g_lat = self.fix.latitude
+            self.g_lng = self.session.fix.longitude
