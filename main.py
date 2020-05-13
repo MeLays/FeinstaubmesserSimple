@@ -53,7 +53,7 @@ def doLogging():
 
     values = sensorQuery.getResult()
 
-    file = open(filename, 'w+')
+    file = open(filename, 'a')
     # file.write("time,lat,lng,pm2.5,pm10")
     file.write("\"" + str(translateGPSTimeToLocal(gpsReader.g_utc)) + "\","
                + str(gpsReader.g_lat) + "," + str(gpsReader.g_lng) + "," + str(values[0]) + "," + str(values[1]) + "\n")
@@ -62,9 +62,9 @@ def doLogging():
 
 
 async def onRequest(request):
-    sendText = """<h3>Feinstaubsensor</h3>
+    sendText = """<!doctype html><html><head><meta http-equiv="refresh" content="5"/></head><body><h3>Feinstaubsensor</h3>
 Wenn diese Seite angezeigt wird ist der Sensor aktiv.<br>
-Diese Seite aktualisiert sich <b>nicht</b> automatisch.<br>
+Diese Seite aktualisiert sich <b>alle 5 Sekunden</b> automatisch.<br>
 Die Feinstaubwerte werden minütlich in .csv Dateien im Unterordner log/ abgelegt.<br>
 Die aktuellen Werte lauten:<br>
 <h3>PM2.5, PM10<h3>
@@ -72,7 +72,7 @@ Die aktuellen Werte lauten:<br>
 Die aktuelle GPS Position:<br>
 %gps%<br>
 Die aktuelle Uhrzeit (GPS umgerechnet in CET):<br>
-%time%"""
+%time%</body></html>"""
 
     values = sensorQuery.getResult()
     sendText = sendText.replace("%pm25%", str(values[0])).replace("%pm10%", str(values[1]))
