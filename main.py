@@ -79,7 +79,7 @@ Die aktuelle Uhrzeit (GPS umgerechnet in CET):<br>
     sendText = sendText.replace("%gps%", "lat: " + str(gpsReader.g_lat) + ", lng: " + str(gpsReader.g_lng))
     sendText = sendText.replace("%time%", str(translateGPSTimeToLocal(gpsReader.g_utc)))
 
-    return web.Response(text=sendText)
+    return web.Response(text=sendText, content_type="text/html; charset=UTF-8")
 
 
 if __name__ == "__main__":
