@@ -5,6 +5,7 @@ from AsyncSensorQuery import AsyncSensorQuery
 from aiohttp import web
 import threading
 import random
+import os
 
 
 def translateGPSTimeToLocal(gpstimestamp):
@@ -35,7 +36,7 @@ def doLogging():
         currentTime = translateGPSTimeToLocal(gpsReader.g_utc)
         new_name = str(currentTime.month) + "_" + str(currentTime.day) + "_"
         new_name += str(currentTime.year) + "_measures_" + str(random.randint(0, 1000000)) + ".csv"
-        filename = new_name
+        filename = "csv_logs" + os.pathsep + new_name
         print("Starting new file", filename, "...")
 
         # write header
