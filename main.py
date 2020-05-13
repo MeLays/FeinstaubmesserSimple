@@ -18,6 +18,10 @@ def translateGPSTimeToLocal(gpstimestamp):
     return utc.astimezone(to_zone)
 
 
+def beautify(times):
+    return times.strftime("%d.%m.%Y %H:%M:%S")
+
+
 gpsReader = None
 sensorQuery = None
 
@@ -36,7 +40,7 @@ def doLogging():
         currentTime = translateGPSTimeToLocal(gpsReader.g_utc)
         new_name = str(currentTime.month) + "_" + str(currentTime.day) + "_"
         new_name += str(currentTime.year) + "_measures_" + str(random.randint(0, 1000000)) + ".csv"
-        filename = "csv_logs" + os.pathsep + new_name
+        filename = "csv_logs" + os.path.sep + new_name
         print("Starting new file", filename, "...")
 
         # write header
@@ -44,13 +48,13 @@ def doLogging():
         file.write("time,lat,lng,pm25,pm10\n")
         file.close()
 
-    print("[", str(translateGPSTimeToLocal(gpsReader.g_utc)), "] Logging current data to file")
+    print("[", beautify(translateGPSTimeToLocal(gpsReader.g_utc)), "] Logging current data to file")
 
     values = sensorQuery.getResult()
 
     file = open(filename, 'a')
     # file.write("time,lat,lng,pm2.5,pm10")
-    file.write("\"" + str(translateGPSTimeToLocal(gpsReader.g_utc)) + "\","
+    file.write("\"" + beautify(translateGPSTimeToLocal(gpsReader.g_utc)) + "\","
                + str(gpsReader.g_lat) + "," + str(gpsReader.g_lng) + "," + str(values[0]) + "," + str(values[1]) + "\n")
     file.close()
     file_length += 1
@@ -60,7 +64,7 @@ async def onRequest(request):
     sendText = """<!doctype html><html><head><meta http-equiv="refresh" content="5"/></head><body><h3>Feinstaubsensor</h3>
 Wenn diese Seite angezeigt wird ist der Sensor aktiv.<br>
 Diese Seite aktualisiert sich <b>alle 5 Sekunden</b> automatisch.<br>
-Die Feinstaubwerte werden minütlich in .csv Dateien im Unterordner log/ abgelegt.<br>
+Die Feinstaubwerte werden minütlich in .csv Dateien im Unterordner csv_log/ abgelegt.<br>
 Die aktuellen Werte lauten:<br>
 <h3>PM2.5, PM10<h3>
 <h3>%pm25%, %pm10%<br><h3>
@@ -72,7 +76,7 @@ Die aktuelle Uhrzeit (GPS umgerechnet in CET):<br>
     values = sensorQuery.getResult()
     sendText = sendText.replace("%pm25%", str(values[0])).replace("%pm10%", str(values[1]))
     sendText = sendText.replace("%gps%", "lat: " + str(gpsReader.g_lat) + ", lng: " + str(gpsReader.g_lng))
-    sendText = sendText.replace("%time%", str(translateGPSTimeToLocal(gpsReader.g_utc)))
+    sendText = sendText.replace("%time%", beautify(translateGPSTimeToLocal(gpsReader.g_utc)))
 
     return web.Response(text=sendText, content_type="text/html")
 
