@@ -1,19 +1,13 @@
 from GpsdStreamReader import GpsdStreamReader
 import time
-from datetime import datetime
 from dateutil import tz, parser
-from astropy.time import Time as AstroTime
 from AsyncSensorQuery import AsyncSensorQuery
 from aiohttp import web
-import threading, random
+import threading
+import random
 
 
 def translateGPSTimeToLocal(gpstimestamp):
-    print ("str" , gpstimestamp)
-    #t = AstroTime(gpstimestamp, format="gps")
-    #t = AstroTime(t, format="unix")
-    #timestr = str(t)
-
     from_zone = tz.tzutc()
     to_zone = tz.tzlocal()
 

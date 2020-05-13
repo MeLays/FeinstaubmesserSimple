@@ -12,7 +12,9 @@ class AsyncSensorQuery(threading.Thread):
 
     def run(self):
         time.sleep(5)
+        print("sensor is being queried ...")
         self.result = self.sensor.query()
+        print("pm2.5:", self.result[0], "pm10:", self.result[1])
 
     def getResult(self):
         return self.result
