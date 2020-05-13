@@ -10,11 +10,14 @@ class AsyncSensorQuery(threading.Thread):
         self.sensor = SDS011(serialport, use_query_mode=True)
         self.result = (0., 0.)
 
+        self.running = True
+
     def run(self):
-        time.sleep(5)
-        print("sensor is being queried ...")
-        self.result = self.sensor.query()
-        print("pm2.5:", self.result[0], "pm10:", self.result[1])
+        while self.running:
+            time.sleep(5)
+            print("sensor is being queried ...")
+            self.result = self.sensor.query()
+            print("pm2.5:", self.result[0], "pm10:", self.result[1])
 
     def getResult(self):
         return self.result
