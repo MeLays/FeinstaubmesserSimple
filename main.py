@@ -65,6 +65,8 @@ async def onRequest(request):
 Wenn diese Seite angezeigt wird ist der Sensor aktiv.<br>
 Diese Seite aktualisiert sich <b>alle 5 Sekunden</b> automatisch.<br>
 Die Feinstaubwerte werden minütlich in .csv Dateien im Unterordner csv_log/ abgelegt.<br>
+Dieser Ordner kann per SMB/Windows Share erreicht werden unter \\\\10.3.141.1\\feinstaub (Gast-Login)<br>
+Bitte bereits gesicherte Daten löschen um das füllen des Speicherplatzes zu verhindern.<br><br>
 Die aktuellen Werte lauten:<br>
 <h3>PM2.5, PM10<h3>
 <h3>%pm25%, %pm10%<br><h3>
